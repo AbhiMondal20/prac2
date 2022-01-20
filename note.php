@@ -7,29 +7,6 @@
 ?>
 
 
-<?php
-
-// echo "Create note.php";
-
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-      
-      require "connection.php";
-      
-    $add_notes  = $_POST['add_notes'];
-    $descript = $_POST['descript'];
-    $sql = "INSERT INTO `add_note` ( `add_notes`, `descript`, `D&T`) VALUES ( '$add_notes', '$descript', current_timestamp())";
-    $result = mysqli_query($con, $sql);
-    if($result){
-      $insert = true;
-    }
-
-   
-
-   
-
-}
-
-?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -40,11 +17,9 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
  
-  <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
-
-
-    <title>notes</title>
+  
+  
+  <title>notes</title>
   </head>
   <body>
 <!-- navbar starts -->
@@ -131,22 +106,54 @@ if($insert){
       <th scope="col">Notes</th>
       <th scope="col">Description</th>
       <th scope="col">Date & Time</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
+
+
+
+
     <?php 
-      $sql = "SELECT *FROM `add_note`";
-      $result = mysqli_query($con, $sql);
-      $num = 0;
-      while($row= mysqli_fetch_assoc($result)){
-        $num = $num + 1;
-        echo 
-            "<tr><th scope='row'>".$num."</th>
-             <td>".$row['add_notes']."</td>
-             <td>".$row['descript']."</td>
-             <td>".$row['D&T']."</td>
-            </tr>";
-      }
+
+
+// echo "Create note.php";
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+      
+  require "connection.php";
+  
+$add_notes  = $_POST['add_notes'];
+$descript = $_POST['descript'];
+$sql = "INSERT INTO `add_note` ( `add_notes`, `descript`, `D&T`) VALUES ( '$add_notes', '$descript', current_timestamp())";
+$result = mysqli_query($con, $sql);
+if($result){
+  $insert = true;
+}
+
+
+
+
+  
+
+  
+
+$sql = "SELECT *FROM `add_note`";
+  $result = mysqli_query($con, $sql);
+  $num = 0;
+  while($row= mysqli_fetch_assoc($result)){
+    $num = $num + 1;
+    echo 
+    "<tr><th scope='row'>".$num."</th>
+    <td>".$row['add_notes']."</td>
+    <td>".$row['descript']."</td>
+    <td>".$row['D&T']."</td>
+    <td>".'<button type="button" class="btn btn-primary">Update</button>'."</td>
+    <td>".'<button type="button" class="btn btn-primary">Upload</button>'."</td>
+    <td>".'<button type="button" class="btn btn-primary">Delete</button>'."</td>
+    </tr>";
+  }
+}
   ?>
   </tbody>
 </table>
@@ -161,9 +168,10 @@ $(document).ready( function () {
 } );
   </script>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 
      <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
